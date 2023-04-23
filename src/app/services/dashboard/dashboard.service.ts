@@ -12,7 +12,9 @@ export class DashboardService {
   private SERVER_URL = environment.apiBaseUrl + "/actuator";
 
   constructor(private http: HttpClient) {}
-
+  public getnotfound(): Observable<any> {
+    return this.http.get<any>(`${this.SERVER_URL}/actuator`);
+  }
   public getHttpTraces(): Observable<any> {
     return this.http.get<any>(`${this.SERVER_URL}/httptrace`);
   }

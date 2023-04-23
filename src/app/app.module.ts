@@ -21,6 +21,7 @@ import { ProductFormComponent } from "./product-form/product-form.component";
 import { ListCategoriesComponent } from "./component/list-categories/list-categories.component";
 import { ProduitDetailsComponent } from "./component/produit-details/produit-details.component";
 import { ShopCartComponent } from "./component/shop-cart/shop-cart.component";
+import { DashboardComponent } from './component/admin/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ShopCartComponent } from "./component/shop-cart/shop-cart.component";
     ListCategoriesComponent,
     ProduitDetailsComponent,
     ShopCartComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

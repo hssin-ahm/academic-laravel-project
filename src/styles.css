@@ -4,26 +4,14 @@
  * Common CSS
  * ----------------------------
  */ 
- *{
-    margin:0;
-    padding:0;
-    -webkit-box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    box-sizing:border-box;
-    
-}
-
-body{
-    font-family:Poppins,sans-serif;
-    font-weight:400;
-    font-size:16px;
-    line-height:1.625;
-    color:#666;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    
-    
-}
+ /* to center nav list - not responsive*/
+#nav ul {
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    width: 60%;
+  }
+  
 
 ul{
     margin:0
@@ -1042,6 +1030,4 @@ footer ul li{
     }
 }
 
-.clickable{
-    cursor: pointer;
-}
+ 
