@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
   totalPages: number[] = [];
   thePageNumber = 1;
   thePageSize = 2;
+
+  public pageSize = 10;
+  public page = 1;
   theTotalElements;
 
   imgUrl = "http://localhost:8080/guest/getImage/";

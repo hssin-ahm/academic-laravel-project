@@ -6,7 +6,10 @@
     <div class="container-fluid">
       <div class="row">
         <!--Card-->
-        <div *ngFor="let prod of products" class="col-md-3">
+        <div *ngFor="let prod of products | paginate: { id: 'trace-list',
+        itemsPerPage: thePageSize,
+        currentPage: thePageNumber,
+        totalItems: products?.length }" class="col-md-3">
           <div class="card card-cascade card-ecommerce wider shadow mb-5 ">
             <!--Card image-->
             <div class="view view-cascade overlay text-center">
@@ -49,7 +52,7 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-9">
-                <nav aria-label="...">
+                <!-- <nav aria-label="...">
                   <ul class="pagination">
                     <li class="page-item {{thePageNumber -1 <=0 ? 'disabled': ''}}"
                       (click)="changePage(thePageNumber - 1)">
@@ -57,19 +60,14 @@
                     </li>
                     <li class="page-item" *ngFor="let num of totalPages" (click)="changePage(num)"><a
                         class="page-link active">{{num}}</a></li>
-                    <!-- <li class="page-item active" aria-current="page">
-                      <a class="page-link">2 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link">3</a></li> -->
                     <li class="page-item {{thePageNumber +1 >=totalPages ? 'disabled': ''}}">
                       <a class=" page-link" (click)="changePage(thePageNumber + 1)">Next</a>
                     </li>
                   </ul>
-                </nav>
+                </nav> -->
 
-                <!-- <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize" [collectionSize]="theTotalElements"
-                  (pageChange)="getProduits()">
-                </ngb-pagination> -->
+                <pagination-controls class="text-center" id="trace-list" (pageChange)="thePageNumber = $event"
+                  maxSize="10" directionLinks="true"></pagination-controls>
               </div>
             </div>
           </div>

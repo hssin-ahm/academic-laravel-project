@@ -21,7 +21,9 @@ import { ProductFormComponent } from "./product-form/product-form.component";
 import { ListCategoriesComponent } from "./component/list-categories/list-categories.component";
 import { ProduitDetailsComponent } from "./component/produit-details/produit-details.component";
 import { ShopCartComponent } from "./component/shop-cart/shop-cart.component";
-import { DashboardComponent } from './component/admin/dashboard/dashboard.component';
+import { DashboardComponent } from "./component/admin/dashboard/dashboard.component";
+import { ChartsModule } from "ng2-charts";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { DashboardComponent } from './component/admin/dashboard/dashboard.compon
     FormsModule,
     HttpClientModule,
     RouterModule,
+    ChartsModule,
+    NgxPaginationModule,
   ],
   providers: [
     AuthGuard,

@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { SystemCpu } from "src/app/models/system-cpu";
 import { SystemHealth } from "src/app/models/system-health";
 import { DashboardService } from "src/app/services/dashboard/dashboard.service";
+import * as Chart from "chart.js";
+import { ChartType } from "src/app/enum/chart-type.enum";
 
 @Component({
   selector: "app-dashboard",
@@ -21,6 +23,8 @@ export class DashboardComponent implements OnInit {
   public http500Traces: any[] = [];
   public httpDefaultTraces: any[] = [];
   private timestamp: number;
+  public pageSize = 10;
+  public page = 1;
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -35,6 +39,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getHttpTraces().subscribe(
       (response: any) => {
         this.processTraces(response.traces);
+        this.initializeBarChart();
+        this.initializePieChart();
       },
       (error: HttpErrorResponse) => {
         console.log(error);
@@ -154,5 +160,118 @@ export class DashboardComponent implements OnInit {
       seconds.toString().padStart(2, "0") +
       "s"
     );
+  }
+
+  private initializeBarChart(): Chart {
+    const element: any = document.getElementById("barChart");
+    return new Chart(element, {
+      type: ChartType.BAR,
+      data: {
+        labels: ["200", "404", "400", "500"],
+        datasets: [
+          {
+            data: [
+              this.http200Traces.length,
+              this.http404Traces.length,
+              this.http400Traces.length,
+              this.http500Traces.length,
+            ],
+            backgroundColor: [
+              "rgb(40,167,69)",
+              "rgb(0,123,255)",
+              "rgb(253,126,20)",
+              "rgb(220,53,69)",
+            ],
+            borderColor: [
+              "rgb(40,167,69)",
+              "rgb(0,123,255)",
+              "rgb(253,126,20)",
+              "rgb(220,53,69)",
+            ],
+            borderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        title: {
+          display: true,
+          text: [`Last 100 Requests as of ${this.formatDate(new Date())}`],
+        },
+        legend: { display: false },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+  }
+  private initializePieChart(): Chart {
+    const element: any = document.getElementById("pieChart");
+    return new Chart(element, {
+      type: ChartType.PIE,
+      data: {
+        labels: ["200", "404", "400", "500"],
+        datasets: [
+          {
+            data: [
+              this.http200Traces.length,
+              this.http404Traces.length,
+              this.http400Traces.length,
+              this.http500Traces.length,
+            ],
+            backgroundColor: [
+              "rgb(40,167,69)",
+              "rgb(0,123,255)",
+              "rgb(253,126,20)",
+              "rgb(220,53,69)",
+            ],
+            borderColor: [
+              "rgb(40,167,69)",
+              "rgb(0,123,255)",
+              "rgb(253,126,20)",
+              "rgb(220,53,69)",
+            ],
+            borderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        title: {
+          display: true,
+          text: [`Last 100 Requests as of ${this.formatDate(new Date())}`],
+        },
+        legend: { display: true },
+      },
+    });
+  }
+  private formatDate(date: Date): string {
+    const dd = date.getDate();
+    const mm = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let day = `${dd}`;
+    let month = `${mm}`;
+    if (dd < 10) {
+      day = `0${dd}`;
+    }
+    if (mm < 10) {
+      month = `0${mm}`;
+    }
+    return `${day}/${month}/${year}`;
+  }
+  public exportTableToExcel(): void {
+    const downloadLink = document.createElement("a");
+    const dataType = "application/vnd.ms-excel";
+    const table = document.getElementById("httptrace-table");
+    const tableHTML = table.outerHTML.replace(/ /g, "%20");
+    const filename = "httptrace.xls";
+    document.body.appendChild(downloadLink);
+    downloadLink.href = "data:" + dataType + ", " + tableHTML;
+    downloadLink.download = filename;
+    downloadLink.click();
   }
 }
